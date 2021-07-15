@@ -37,6 +37,10 @@ body {
 
 input:not([type="reset"]) {
   text-align: right;
+  background-color: hsl(189, 41%, 97%);
+  border: 2px solid hsl(189, 41%, 97%);
+  border-radius: 5px;
+  width: 100%;
 }
 
 input,
