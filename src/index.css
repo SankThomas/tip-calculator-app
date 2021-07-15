@@ -35,6 +35,10 @@ body {
   box-shadow: 0 5px 5px hsl(183, 100%, 15%, 0.1);
 }
 
+input:not([type="reset"]) {
+  text-align: right;
+}
+
 input,
 input::placeholder {
   font-size: 24px;
