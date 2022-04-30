@@ -37,6 +37,13 @@ const App = () => {
   //   setTip((bill * 5) / 100)
   // }
 
+  const handleReset = () => {
+    setBill(0.0)
+    setPeople(1)
+    setTip(0)
+    setTotal(0)
+  }
+
   return (
     <>
       <main>
@@ -97,7 +104,7 @@ const App = () => {
                 <p>${total}</p>
               </article>
             </div>
-            <input type="reset" value="RESET" />
+            <input type="reset" value="RESET" onClick={handleReset} />
           </form>
         </section>
       </main>
