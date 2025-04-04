@@ -1,31 +1,17 @@
-import localFont from "next/font/local";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const font = Space_Grotesk({ subsets: ["latin"], weights: ["400", "600"] });
 
 export const metadata = {
-  title: "Next15 Starter Template",
-  description:
-    "Next15 Starter Template with JavaScript, ShadCN, TailwindCSS and Prettier Plugin TailwindCSS",
+  title: "Tip Calculator App | Frontend Mentor Challenge",
+  description: "Tip Calculator App | Frontend Mentor Challenge",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`antialiased ${font.className}`}>{children}</body>
     </html>
   );
 }
