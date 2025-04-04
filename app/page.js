@@ -1,92 +1,130 @@
-import React from "react";
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Divide } from "lucide-react";
+import Image from "next/image";
+import React, { useState } from "react";
 
 export default function Home() {
+  const [bill, setBill] = useState("");
+  const [tip, setTip] = useState(0);
+  const [customTip, setCustomTip] = useState("");
+  const [people, setPeople] = useState("");
+
+  const tipAmount = bill && people ? (bill * (tip / 100)) / people : 0;
+  const totalPerPerson = bill && people ? bill / people + tipAmount : 0;
+
+  const handleReset = () => {
+    setBill("");
+    setTip(0);
+    setCustomTip("");
+    setPeople("");
+  };
+
   return (
-    <div className="mx-auto max-w-2xl space-y-6 px-8 py-20">
-      <h1 className="text-center text-2xl font-bold">
-        NextJs 15 Starter with ShadCN, TailwindCSS, Prettier Plugin for
-        TailwindCSS, and JavaScript.
-      </h1>
-
-      <h2 className="text-xl font-bold">Why did I choose these?</h2>
-
-      <ol className="list-decimal space-y-4">
-        <li>
-          ShadCN: An amazing component library:{" "}
-          <a
-            href="https://ui.shadcn.com"
-            target="_blank"
-            rel="noreferrer"
-            className="text-blue-500 underline"
-          >
-            {" "}
-            https://ui.shadcn.com
-          </a>
-        </li>
-        <li>
-          Prettier Plugin for TailwindCSS sorts classes according to an order
-          agreed upon at Tailwind Labs:{" "}
-          <a
-            href="https://github.com/tailwindlabs/prettier-plugin-tailwindcss"
-            target="_blank"
-            rel="noreferrer"
-            className="text-blue-500 underline"
-          >
-            https://github.com/tailwindlabs/prettier-plugin-tailwindcss
-          </a>
-        </li>
-        <li>JavaScript, because I don&apos;t know TypeScript.</li>
-        <li>
-          The default font is set to Geist Sans in{" "}
-          <code className="rounded bg-neutral-800 px-1 py-0.5 text-sm">
-            globals.css
-          </code>{" "}
-          - the current default font in NextJs.
-        </li>
-      </ol>
-
+    <div className="flex min-h-screen flex-col items-center justify-center bg-teal-100">
+      <Image
+        src="/logo.svg"
+        alt="Splitter"
+        width={400}
+        height={400}
+        className="mb-10 w-20 object-cover"
+      />
       <div>
-        <p>
-          This example uses{" "}
-          <code className="rounded bg-neutral-800 px-1 py-0.5 text-sm">
-            pnpm
-          </code>{" "}
-          as the package manager. If you are using a different package manager,
-          first delete the{" "}
-          <code className="rounded bg-neutral-800 px-1 py-0.5 text-sm">
-            pnpm-lock.yaml
-          </code>{" "}
-          file before installing{" "}
-          <code className="rounded bg-neutral-800 px-1 py-0.5 text-sm">
-            node_modules
-          </code>
-          , otherwise it will cause a conflict in your project.
-        </p>
+        <div className="grid w-full max-w-4xl grid-cols-1 gap-6 rounded-2xl bg-white p-6 text-neutral-900 shadow-lg md:grid-cols-2">
+          <div className="space-y-6">
+            <article>
+              <Label htmlFor="bill" className="mb-2 inline-block text-teal-800">
+                Bill
+              </Label>
+              <Input
+                id="bill"
+                type="number"
+                placeholder="$0"
+                value={bill}
+                onChange={(e) => setBill(e.target.value)}
+                className="border-teal-100 bg-teal-50 text-teal-800 focus:ring-2 focus:ring-teal-200 lg:h-10 lg:text-lg"
+              />
+            </article>
 
-        <p className="mt-8">
-          <strong>UPDATE:</strong> I added{" "}
-          <code className="rounded bg-neutral-800 px-1 py-0.5 text-sm">
-            "next/babel"
-          </code>{" "}
-          in the{" "}
-          <code className="rounded bg-neutral-800 px-1 py-0.5 text-sm">
-            .eslintrc.json
-          </code>{" "}
-          file because I was getting a weird error in all the files saying that
-          it could not find the module.
-        </p>
+            <article>
+              <Label htmlFor="tip" className="mb-2 inline-block text-teal-800">
+                Select tip %
+              </Label>
+              <div className="grid grid-cols-3 gap-2">
+                {[5, 10, 15, 25, 50].map((value) => (
+                  <Button
+                    key={value}
+                    onClick={() => setTip(value)}
+                    className={`${tip === value ? "bg-teal-400" : "bg-teal-800"} hover:bg-teal-600`}
+                  >
+                    {value}%
+                  </Button>
+                ))}
+                <Input
+                  id="tip"
+                  type="number"
+                  placeholder="Custom"
+                  value={customTip}
+                  onChange={(e) => {
+                    setCustomTip(e.target.value);
+                    setTip(e.target.value);
+                  }}
+                  className="border-teal-100 bg-teal-50 text-teal-800 focus:ring-2 focus:ring-teal-200 lg:h-10 lg:text-lg"
+                />
+              </div>
+            </article>
+
+            <article>
+              <Label
+                htmlFor="people"
+                className="mb-2 inline-block text-teal-800"
+              >
+                Number of People
+              </Label>
+              <Input
+                id="people"
+                type="number"
+                placeholder="0"
+                value={people}
+                onChange={(e) => setPeople(e.target.value)}
+                className="border-teal-100 bg-teal-50 text-teal-800 focus:ring-2 focus:ring-teal-200 lg:h-10 lg:text-lg"
+              />
+            </article>
+          </div>
+
+          <div className="flex flex-col justify-between rounded-xl bg-teal-800 p-6 text-teal-100">
+            <div className="space-y-6">
+              <article className="flex items-center justify-between">
+                <p className="text-lg font-semibold text-white">
+                  Tip Amount{" "}
+                  <span className="block text-xs text-teal-400">/ person</span>
+                </p>
+                <p className="text-3xl font-bold">${tipAmount.toFixed(2)}</p>
+              </article>
+
+              <article className="flex items-center justify-between">
+                <p className="text-lg font-semibold text-white">
+                  Total{" "}
+                  <span className="block text-xs text-teal-400">/ person</span>
+                </p>
+                <p className="text-3xl font-bold">
+                  ${totalPerPerson.toFixed(2)}
+                </p>
+              </article>
+            </div>
+
+            <Button
+              className="mt-6 w-full bg-teal-700 hover:bg-teal-600"
+              onClick={handleReset}
+            >
+              RESET
+            </Button>
+          </div>
+        </div>
       </div>
-
-      <small className="mt-8 block text-center">
-        <a
-          href="https://youtube.com/tsbsankara"
-          target="_blank"
-          rel="noreferrer"
-          className="text-blue-500 underline"
-        >
-          Find me here
-        </a>
-      </small>
     </div>
   );
 }
