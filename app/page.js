@@ -24,7 +24,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-teal-100">
+    <div className="flex min-h-screen flex-col items-center justify-center px-4 bg-teal-100">
       <Image
         src="/logo.svg"
         alt="Splitter"
